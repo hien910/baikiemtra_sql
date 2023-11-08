@@ -84,8 +84,8 @@ limit 3;
 -- 9
 select Customers.customer_id, Customers.customer_name , count(*) as total_order from Customers
 inner join Orders on Customers.customer_id = Orders.customer_id
-group by customer_id
-having date(order_date) between 1 and 31;
+WHERE order_date BETWEEN '2018-01-01' and '2020-01-01'
+group by customer_id ;
 
 -- 10
 select OrderDetails.product_id , sum(OrderDetails.quantity) as total_ordered
