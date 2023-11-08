@@ -88,7 +88,7 @@ WHERE order_date BETWEEN '2018-01-01' and '2020-01-01'
 group by customer_id ;
 
 -- 10
-select OrderDetails.product_id , sum(OrderDetails.quantity) as total_ordered
+select OrderDetails.product_id , Products.product_name, sum(OrderDetails.quantity) as total_ordered
 from OrderDetails
 inner join Products on Products.product_id = OrderDetails.product_id
 group by OrderDetails.product_id
