@@ -27,15 +27,18 @@ create table OrderDetails(
 	product_id int,
     foreign key (product_id) references Products(product_id),
     quantity int);
+    
 
 -- 1    
-select Products.* from Products
+select Products.*, OrderDetails.quantity from Products
 inner join OrderDetails on Products.product_id = OrderDetails.product_id;
 
 -- 2
-select OrderDetails.* ,sum(Products.price * OrderDetails.quantity) as sum
+select OrderDetails.order_id, sum(Products.price * OrderDetails.quantity) as total_price
 from OrderDetails
-inner join Products on Products.product_id = OrderDetails.product_id ;
+inner join Products on Products.product_id = OrderDetails.product_id 
+group by OrderDetails.order_id = 2;
+
 
 -- 3
 select Products.* from Products
@@ -54,6 +57,7 @@ from Customers
 inner join Orders on Customers.customer_id = Orders.customer_id
 inner join OrderDetails on Orders.order_id = OrderDetails.order_id 
 group by Customers.customer_name;
+
 -- 6
 select Categories.category_name, count(Products.product_id) as product_count
 from Categories
@@ -75,6 +79,19 @@ inner join OrderDetails on Orders.order_id = OrderDetails.order_id
 group by Customers.customer_name order by total_ordered desc 
 limit 3;
 
+-- 9
+select Customers.customer_id, Customers.customer_name , count(*) as total_order from Customers
+inner join Orders on Customers.customer_id = Orders.customer_id
+group by customer_id
+having date(order_date) between 1 and 31;
+
+-- 10
+select OrderDetails.product_id , sum(OrderDetails.quantity) as total_ordered
+from OrderDetails
+inner join Products on Products.product_id = OrderDetails.product_id
+group by OrderDetails.product_id
+order by total_ordered DESC
+limit 1;
 
 
 
