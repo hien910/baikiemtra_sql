@@ -37,7 +37,7 @@ inner join OrderDetails on Products.product_id = OrderDetails.product_id;
 select OrderDetails.order_id, sum(Products.price * OrderDetails.quantity) as total_price
 from OrderDetails
 inner join Products on Products.product_id = OrderDetails.product_id 
-group by OrderDetails.order_id = 2;
+group by OrderDetails.order_id ;
 
 
 -- 3
@@ -52,7 +52,7 @@ inner join Products on Categories.category_id = Products.category_id
 group by category_name;
 
 -- 5
-select Customers.customer_name, count(OrderDetails.quantity) as total_orderd
+select Customers.customer_name, sum(OrderDetails.quantity) as total_orderd
 from Customers
 inner join Orders on Customers.customer_id = Orders.customer_id
 inner join OrderDetails on Orders.order_id = OrderDetails.order_id 
@@ -62,7 +62,9 @@ group by Customers.customer_name;
 select Categories.category_name, count(Products.product_id) as product_count
 from Categories
 inner join Products on Products.category_id = Categories.category_id
-group by Categories.category_name;
+group by Categories.category_name
+order by product_count desc
+limit 1;
 
 -- 7
 select Categories.category_name, sum(OrderDetails.quantity) as total_ordered
